@@ -1,18 +1,7 @@
--- insert into cafe (name, address) values ('cafe1', 'Berlin');
--- insert into cafe (name, address) values ('cafe2', 'Milan');
--- insert into cafe (name, address) values ('cafe3', 'Paris');
---
--- insert into product (id, name, price, old_price, is_new, is_hot, picture, description, category_id) values ('bea94a4b-0d87-4ffc-b8c7-1e14ae14e44b', 'product1', 123.1, 456.7, true, false, 's1.jpg', 'description1', '4f773be3-b70a-43c2-8f3a-96856623e229');
--- insert into product (id, name, price, old_price, is_new, is_hot, picture, description, category_id) values ('bea94a4b-0d87-4ffc-b8c7-1e14ae14e441', 'product2', 123.1, 456.7, true, true, 's2.jpg', 'description2', '4f773be3-b70a-43c2-8f3a-96856623e229');
--- insert into product (id, name, price, old_price, is_new, is_hot, picture, description, category_id) values ('bea94a4b-0d87-4ffc-b8c7-1e14ae14e442', 'product3', 123.1, 456.7, false, false, 's3.jpg', 'description3', '4f773be3-b70a-43c2-8f3a-96856623e229');
--- insert into product (id, name, price, old_price, is_new, is_hot, picture, description, category_id) values ('bea94a4b-0d87-4ffc-b8c7-1e14ae14e443', 'product4', 123.1, 456.7, false, false, 's4.jpg', 'description4', '4f773be3-b70a-43c2-8f3a-96856623e229');
---
--- insert into product (id, name, price, old_price, is_new, is_hot, picture, description, category_id) values ('bea94a4b-0d87-4ffc-b8c7-1e14ae14e444', 'product5', 123.1, 456.7, true, false, 's5.jpg', 'description5', '7289637b-d7ee-4a14-9d0c-f919001dc427');
--- insert into product (id, name, price, old_price, is_new, is_hot, picture, description, category_id) values ('bea94a4b-0d87-4ffc-b8c7-1e14ae14e445', 'product6', 123.1, 456.7, true, false, 's6.jpg', 'description6', '7289637b-d7ee-4a14-9d0c-f919001dc427');
--- insert into product (id, name, price, old_price, is_new, is_hot, picture, description, category_id) values ('bea94a4b-0d87-4ffc-b8c7-1e14ae14e446', 'product7', 123.1, 456.7, false, false, 's7.jpg', 'description7', '7289637b-d7ee-4a14-9d0c-f919001dc427');
--- insert into product (id, name, price, old_price, is_new, is_hot, picture, description, category_id) values ('bea94a4b-0d87-4ffc-b8c7-1e14ae14e447', 'product8', 123.1, 456.7, false, false, 's8.jpg', 'description8', '7289637b-d7ee-4a14-9d0c-f919001dc427');
---
--- insert into product (id, name, price, old_price, is_new, is_hot, picture, description, category_id) values ('bea94a4b-0d87-4ffc-b8c7-1e14ae14e448', 'product9', 123.1, 456.7, true, false, 's9.jpg', 'description9', '9ab3715a-243e-47b2-aa4b-d5dbf038e2e9');
--- insert into product (id, name, price, old_price, is_new, is_hot, picture, description, category_id) values ('bea94a4b-0d87-4ffc-b8c7-1e14ae14e449', 'product10', 123.1, 456.7, true, false, 's10.jpg', 'description10', '9ab3715a-243e-47b2-aa4b-d5dbf038e2e9');
--- insert into product (id, name, price, old_price, is_new, is_hot, picture, description, category_id) values ('bea94a4b-0d87-4ffc-b8c7-1e14ae14e440', 'product11', 123.1, 456.7, false, false, 's11.jpg', 'description11', '9ab3715a-243e-47b2-aa4b-d5dbf038e2e9');
--- insert into product (id, name, price, old_price, is_new, is_hot, picture, description, category_id) values ('bea94a4b-0d87-4ffc-b8c7-1e14ae14e44c', 'product12', 123.1, 456.7, false, false, 's12.jpg', 'description12', '9ab3715a-243e-47b2-aa4b-d5dbf038e2e9');
+insert into cafe (id, name, address) values ('20ebdfe3-191e-4f46-951a-b34b55611a4a', 'Tempo_Berlin', 'Berlin');
+insert into cafe (id, name, address) values ('a010e9d0-f4fe-40c7-871d-72f4979a85ca', 'Tempo_Milan', 'Milan');
+insert into cafe (id, name, address) values ('90e4801a-8d77-4b59-9189-787d329667ba', 'Tempo_Paris', 'Paris');
+
+insert into pizza (id, name, size, price, ingredients, picture, cafe_id) values ('bea94a4b-0d87-4ffc-b8c7-1e14ae14e440', '4 seasons', 'small', 18.7, 'mashed tomato sauce, Mozzarella, ham, mushrooms, shrimp, mussels, pizza seasoning, garlic oil', '4_seasons.jpg', '20ebdfe3-191e-4f46-951a-b34b55611a4a');
+insert into pizza (id, name, size, price, ingredients, picture, cafe_id) values ('bea94a4b-0d87-4ffc-b8c7-1e14ae14e441', 'margarita', 'small', 16.2, 'mashed tomato sauce, Mozzarella, Mozzarella in brine, pizza seasoning, garlic oil', 'margarita.jpg', 'a010e9d0-f4fe-40c7-871d-72f4979a85ca');
+insert into pizza (id, name, size, price, ingredients, picture, cafe_id) values ('bea94a4b-0d87-4ffc-b8c7-1e14ae14e442', 'roman', 'small', 19.4, 'pureed tomato sauce, mozzarella, chicken, bacon, cheese sauce, pickled cucumbers, pizza seasoning, garlic butter', 'roman.jpg', '90e4801a-8d77-4b59-9189-787d329667ba');

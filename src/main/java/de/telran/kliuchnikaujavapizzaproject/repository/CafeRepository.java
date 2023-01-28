@@ -1,6 +1,6 @@
-package de.telran.repository;
+package de.telran.kliuchnikaujavapizzaproject.repository;
 
-import de.telran.model.Cafe;
+import de.telran.kliuchnikaujavapizzaproject.model.Cafe;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

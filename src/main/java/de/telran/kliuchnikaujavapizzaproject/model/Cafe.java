@@ -1,11 +1,11 @@
-package de.telran.model;
+package de.telran.kliuchnikaujavapizzaproject.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
-
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -20,8 +20,5 @@ public class Cafe {
     private String name;
 
     private String address;
-
-    @OneToMany
-    private List<Pizza> pizzas;
 
 }
