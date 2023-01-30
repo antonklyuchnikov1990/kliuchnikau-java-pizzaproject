@@ -31,8 +31,7 @@ public class MainController {
     }
 
     @GetMapping("/")
-    public String index(Model model) {
-        model.addAttribute("/", pizzaRepository.findAll());
+    public String index() {
         return "index";
     }
 
@@ -74,5 +73,7 @@ public class MainController {
         byte[] image = Files.readAllBytes(new File(imagesDir + "/" + filename).toPath());
         return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.valueOf("image/png")).body(image);
     }
+
+
 
 }

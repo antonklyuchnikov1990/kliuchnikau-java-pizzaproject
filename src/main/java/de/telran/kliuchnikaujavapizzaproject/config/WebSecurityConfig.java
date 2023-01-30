@@ -1,5 +1,6 @@
 package de.telran.kliuchnikaujavapizzaproject.config;
 
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,8 +18,11 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .authorizeHttpRequests().requestMatchers(PathRequest.toStaticResources()
+                        .atCommonLocations()).permitAll()
+                .and()
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/").permitAll()
+                        .requestMatchers("/", "/hello").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
@@ -36,7 +40,7 @@ public class WebSecurityConfig {
                 User.withDefaultPasswordEncoder()
                         .username("admin")
                         .password("123")
-                        .roles("USER")
+                        .roles("ADMIN")
                         .build();
 
         return new InMemoryUserDetailsManager(user);
