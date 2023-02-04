@@ -17,53 +17,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 public class MainController {
-
-    private final PizzaRepository pizzaRepository;
-
-    private final CafeRepository cafeRepository;
-
-    public MainController(PizzaRepository pizzaRepository, CafeRepository cafeRepository) {
-        this.pizzaRepository = pizzaRepository;
-        this.cafeRepository = cafeRepository;
-    }
-
-    @GetMapping("/")
-    public String index() {
-        return "index";
-    }
-
-    @PostMapping("/add_pizza")
-    public String addPizza(Pizza pizza, Model model) {
-        model.addAttribute("add_pizza", pizzaRepository.save(pizza));
-        return "index";
-    }
-
-    @PostMapping("/add_cafe")
-    public String addCafe(Cafe cafe, Model model) {
-        model.addAttribute("add_cafe", cafeRepository.save(cafe));
-        return "index";
-    }
-
-    @GetMapping("/pizza{id}")
-    public String getPizza(@PathVariable String id, Model model) {
-        model.addAttribute("get_pizza", pizzaRepository.findById(id));
-        return "index";
-    }
-
-    @GetMapping("/cafe{id}")
-    public String getCafe(@PathVariable String id, Model model) {
-        model.addAttribute("get_cafe", cafeRepository.findById(id));
-        return "index";
-    }
-
-    @GetMapping("/cafes")
-    public String getCafes(Model model) {
-        model.addAttribute("get_cafes", cafeRepository.findAll());
-        return "index";
-    }
 
     @Value("${images.dir}")
     private String imagesDir;
@@ -73,7 +33,5 @@ public class MainController {
         byte[] image = Files.readAllBytes(new File(imagesDir + "/" + filename).toPath());
         return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.valueOf("image/png")).body(image);
     }
-
-
 
 }
