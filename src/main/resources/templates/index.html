@@ -4,75 +4,51 @@
 
 <head>
     <title>Pizza Main</title>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" media="all" href="styles/style.css"/>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 </head>
 
 <body>
-<div id="container">
-    <div id="incontainer">
-        <div id="header">
-            <ul class="menu">
-                <li class="btn_1"><a href="/">home page</a></li>
-                <li class="line"></li>
-                <li class="btn_2"><a href="#">about us</a></li>
-                <li class="line"></li>
-                <li class="btn_3"><a href="#">our menu</a></li>
-                <li class="line"></li>
-                <li class="btn_4"><a href="#">home delivery</a></li>
-                <li class="line"></li>
-                <li class="btn_5"><a href="#">contacts</a></li>
-            </ul>
-<!--            <img th:each="pizza : ${element.value}" th:src="@{/pizza/{pizzaId}(pizzaId=${pizza.picture})}"-->
-<!--            width="269" height="80" alt="" id="logo"/>-->
-        </div>
-        <div id="content">
-            <div id="leftPan">
-                <div id="welcome">
-                    <h2></h2>
-                    <p class="headline">Nam eu nulla. Donec lobortis purus vel urna. Nunc laoreet lacinia nunc. </p>
-                    <p>Nam eu nulla. Donec lobortis purus vel urna. Nunc laoreet lacinia nunc. In volutpat sodales
-                        ipsum. Sed vestibulum. Integer in ante. Sed Nunc laoreet lacinia nunc. In volutpat sodales </p>
-                    <ul>
-                        <li><a href="#">Nam eu nulla. Donec lobortis purus </a></li>
-                        <li><a href="#">vel urna. Nunc laoreet lacinia nunc. </a></li>
-                        <li><a href="#">In volutpat sodales ipsum. Sed </a></li>
-                        <li><a href="#">vestibulum. Integer in ante. Sed </a></li>
-                    </ul>
-                </div>
+
+<button type="button" class="btn btn-warning" th:onclick="|location.href='@{user}'|">
+    Registration
+</button>
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    <div th:each="pizza : ${menu}" class="col">
+        <div class="card" style="max-width: 18rem;">
+            <img th:src="@{'/image/' + ${pizza.picture}}" class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 th:text="${pizza.name}" class="card-title"></h5>
+                <p th:text="${pizza.ingredients}" class="card-text"></p>
             </div>
-            <div id="rightPan">
-                <div id="special">
-                    <h2></h2>
-                    <div class="specialItem"><img
-                            src="images/img_pizza.jpg"
-                            width="75" height="75" alt=""/>
-                        <p><span class="headline">Nam eu nulla. Donec lobortis purus vel urna. Nunc </span><br/>
-                            Nam eu nulla. Donec lobortis purus vel urna. Nunc laoreet lacinia nunc. In volutpat sodales
-                            ipsum. Sed vestibulum. Integer in ante. Sed Nunc laoreet lacinia nunc. In volutpat sodales
-                            <a href="#">BUY IT NOW!</a></p>
-                        <div class="clear"></div>
-                    </div>
-                    <div class="specialItem"><img src="images/img_pizza-10.jpg" width="75" height="75"
-                                                  alt=""/>
-                        <p><span class="headline">Nam eu nulla. Donec lobortis purus vel urna. Nunc </span><br/>
-                            Nam eu nulla. Donec lobortis purus vel urna. Nunc laoreet lacinia nunc. In volutpat sodales
-                            ipsum. Sed vestibulum. Integer in ante. Sed Nunc laoreet lacinia nunc. In volutpat sodales
-                            <a href="#">BUY IT NOW!</a></p>
-                        <div class="clear"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="clear" id="end"></div>
-        </div>
-        <div id="footer">
-            <p><a href="#">HOME PAGE</a> | <a href="#">ABOUT US</a> | <a href="#">OUR MENU</a> | <a href="#">HOME
-                DLIVERY</a> | <a href="#">NEWS</a> | <a href="#">CONTACTS</a><br/>
         </div>
     </div>
 </div>
+
+<!--<div th:each="element : ${map}">-->
+<!--    <p th:text="${element.key.name}">-->
+<!--    <div>-->
+<!--        <a th:each="pizza : ${element.value}" href="#" class="pizza">-->
+<!--            <div class="row row-cols-1 row-cols-md-2 g-4">-->
+<!--                <div class="col">-->
+<!--                    <div class="card">-->
+<!--                        <img th:src="@{'/image/' + ${pizza.picture}}" class="card-img-top" alt="...">-->
+<!--                        <div class="card-body">-->
+<!--                            <h5 th:text="${pizza.name}" class="card-title"></h5>-->
+<!--                            <p th:text="${pizza.ingredients}" class="card-text"></p>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </a>-->
+<!--    </div>-->
+<!--</div>-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

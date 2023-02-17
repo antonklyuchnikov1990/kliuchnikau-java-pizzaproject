@@ -33,18 +33,20 @@
         <td th:text="${pizza.size}">
         <td th:text="${pizza.price}">
         <td th:text="${pizza.ingredients}">
-        <td><img th:href="@{'/image/' + ${pizza.picture}}"></td>
         <td>
-        <button type="button" class="btn btn-success"
-                th:onclick="|location.href='@{'/editPizza/' + ${pizza.id}}'|">Edit
-        </button>
-        <button type="button" class="btn btn-danger"
-                th:onclick="|location.href='@{'/deletePizza/' + ${pizza.id}}'|">Delete
-        </button>
-    </td>
+            <img th:src="@{'/image/' + ${pizza.picture}}" alt="photo 1">
+        </td>
+        <td>
+            <button type="button" class="btn btn-success"
+                    th:onclick="|location.href='@{'/editPizza/' + ${pizza.id}}'|">Edit
+            </button>
+            <button type="button" class="btn btn-danger"
+                    th:onclick="|location.href='@{'/deletePizza/' + ${pizza.id}}'|">Delete
+            </button>
+        </td>
     </tr>
     </tbody>
 </table>
-<button type="button" class="btn btn-primary" th:onclick="location.href='/addPizza';">Add Pizza</button>
+<button type="button" class="btn btn-primary" th:onclick="|location.href='/addPizza';|">Add Pizza</button>
 </body>
 </html>
