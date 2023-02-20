@@ -1,50 +1,64 @@
-//package de.telran.kliuchnikaujavapizzaproject.config;
+package de.telran.kliuchnikaujavapizzaproject.config;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+
+import javax.sql.DataSource;
+import java.security.cert.Extension;
+
+@Configuration
+@EnableWebSecurity
+public class WebSecurityConfig {
+
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        final String[] permits = {"/", "/cafes", "/admin", "/registration",
+                "/image/**"};
+        http
+                .authorizeHttpRequests((requests) -> requests
+                        .requestMatchers(permits).permitAll()
+                        .requestMatchers(PathRequest.toStaticResources()
+                                .atCommonLocations()).permitAll()
+                        .anyRequest().authenticated()
+                )
+                .formLogin((form) -> form
+                        .loginPage("/admin")
+                        .defaultSuccessUrl("/cafes")
+                        .permitAll()
+                )
+                .logout(LogoutConfigurer::permitAll);
+
+        return http.build();
+    }
+
+    @Bean
+    public static BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+//    @Autowired
+//    private DataSource dataSource;
 //
-//import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
-//import org.springframework.context.annotation.Bean;
-//import org.springframework.context.annotation.Configuration;
-//import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-//import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-//import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
-//import org.springframework.security.core.userdetails.User;
-//import org.springframework.security.core.userdetails.UserDetails;
-//import org.springframework.security.core.userdetails.UserDetailsService;
-//import org.springframework.security.provisioning.InMemoryUserDetailsManager;
-//import org.springframework.security.web.SecurityFilterChain;
-//
-//@Configuration
-//@EnableWebSecurity
-//public class WebSecurityConfig {
-//
-//    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        http
-//                .authorizeHttpRequests().requestMatchers(PathRequest.toStaticResources()
-//                        .atCommonLocations()).permitAll()
+//    @Autowired
+//    public void configureGlobal(AuthenticationManagerBuilder auth)
+//            throws Exception {
+//        auth.jdbcAuthentication().dataSource(dataSource)
+//                .withDefaultSchema()
+//                .withUser("user").password(passwordEncoder().encode("password")).roles("USER")
 //                .and()
-//                .authorizeHttpRequests((requests) -> requests
-//                        .requestMatchers("/", "/cafes", "/admin").permitAll()
-//                        .anyRequest().authenticated()
-//                )
-//                .formLogin((form) -> form
-//                        .loginPage("/admin")
-//                        .defaultSuccessUrl("/cafes")
-//                        .permitAll()
-//                )
-//                .logout(LogoutConfigurer::permitAll);
-//
-//        return http.build();
+//                .withUser("admin").password(passwordEncoder().encode("password")).roles("USER", "ADMIN");
 //    }
 //
-//    @Bean
-//    public UserDetailsService userDetailsService() {
-//        UserDetails user =
-//                User.withDefaultPasswordEncoder()
-//                        .username("admin")
-//                        .password("123")
-//                        .roles("ADMIN")
-//                        .build();
-//
-//        return new InMemoryUserDetailsManager(user);
+//    private Extension passwordEncoder() {
 //    }
-//}
+
+}

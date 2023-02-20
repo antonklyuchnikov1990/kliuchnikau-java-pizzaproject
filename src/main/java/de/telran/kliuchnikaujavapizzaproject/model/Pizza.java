@@ -1,14 +1,13 @@
 package de.telran.kliuchnikaujavapizzaproject.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -33,4 +32,7 @@ public class Pizza {
     @ManyToOne(optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Cafe cafe;
+
+//    @ManyToMany(mappedBy = "pizzas")
+//    private List<Order> orders;
 }
