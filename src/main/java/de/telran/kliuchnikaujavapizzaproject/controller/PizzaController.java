@@ -2,6 +2,7 @@ package de.telran.kliuchnikaujavapizzaproject.controller;
 
 import de.telran.kliuchnikaujavapizzaproject.model.Pizza;
 import de.telran.kliuchnikaujavapizzaproject.repository.CafeRepository;
+import de.telran.kliuchnikaujavapizzaproject.service.CafeService;
 import de.telran.kliuchnikaujavapizzaproject.service.PizzaService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,16 +12,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @Controller
 public class PizzaController {
 
     private final PizzaService pizzaService;
 
-    private final CafeRepository cafeRepository;
+    private final CafeService cafeService;
 
-    public PizzaController(PizzaService pizzaService, CafeRepository cafeRepository) {
+    public PizzaController(PizzaService pizzaService, CafeService cafeService) {
         this.pizzaService = pizzaService;
-        this.cafeRepository = cafeRepository;
+        this.cafeService = cafeService;
     }
 
 
@@ -33,14 +36,14 @@ public class PizzaController {
     @GetMapping("/addPizza")
     public String addPizza(Model model) {
         model.addAttribute("pizza", new Pizza());
-        model.addAttribute("cafes", cafeRepository.findAll());
+        model.addAttribute("cafes", cafeService.getAllCafe());
         return "pizza";
     }
 
     @GetMapping("/editPizza/{id}")
     public String editPizza(@PathVariable String id, Model model) {
         model.addAttribute("pizza", pizzaService.findPizzaById(id));
-        model.addAttribute("cafes", cafeRepository.findAll());
+        model.addAttribute("cafes", cafeService.getAllCafe());
         return "pizza";
     }
 
@@ -63,5 +66,11 @@ public class PizzaController {
         return "redirect:/pizzas";
     }
 
+    @GetMapping("/pizzas/{cafeId}")
+    public String getPizzasByCafe(@PathVariable String cafeId, Model model) {
+        List<Pizza> pizzas = pizzaService.getPizzasInCafe(cafeService.findCafeById(cafeId));
+        model.addAttribute("pizzasInCafe", pizzas);
+        return "redirect:/pizzas";
+    }
 
 }

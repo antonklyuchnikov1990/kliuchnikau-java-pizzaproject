@@ -33,6 +33,6 @@ public class Pizza {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Cafe cafe;
 
-//    @ManyToMany(mappedBy = "pizzas")
-//    private List<Order> orders;
+
+
 }

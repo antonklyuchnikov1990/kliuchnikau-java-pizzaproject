@@ -4,12 +4,12 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
-
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "Orders")
+@Table(name = "orders")
 @Data
 @NoArgsConstructor
 public class Order {
@@ -23,6 +23,12 @@ public class Order {
     private LocalDateTime date;
 
     @ManyToMany
-    private List<Pizza> pizzas;
+    private List<Pizza> pizzas = new ArrayList<>();
+
+    @ManyToOne
+    private User user;
+
+    @ManyToOne
+    private Cafe cafe;
 
 }

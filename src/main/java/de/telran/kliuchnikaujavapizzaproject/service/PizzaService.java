@@ -1,21 +1,19 @@
 package de.telran.kliuchnikaujavapizzaproject.service;
 
+import de.telran.kliuchnikaujavapizzaproject.model.Cafe;
 import de.telran.kliuchnikaujavapizzaproject.model.Pizza;
 import de.telran.kliuchnikaujavapizzaproject.repository.PizzaRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -26,6 +24,7 @@ public class PizzaService {
     @Value("${images.dir}")
     private String imagesDir;
 
+    @Autowired
     public PizzaService(PizzaRepository pizzaRepository) {
         this.pizzaRepository = pizzaRepository;
     }
@@ -53,6 +52,10 @@ public class PizzaService {
 
     public void deletePizzaById(String id) {
         pizzaRepository.deleteById(id);
+    }
+
+    public List<Pizza> getPizzasInCafe(Cafe cafe) {
+       return pizzaRepository.findPizzasByCafe(cafe);
     }
 
 }

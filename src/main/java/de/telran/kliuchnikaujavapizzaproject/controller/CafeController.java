@@ -1,7 +1,8 @@
 package de.telran.kliuchnikaujavapizzaproject.controller;
 
 import de.telran.kliuchnikaujavapizzaproject.model.Cafe;
-import de.telran.kliuchnikaujavapizzaproject.repository.CafeRepository;
+import de.telran.kliuchnikaujavapizzaproject.service.CafeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,10 +12,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class CafeController {
 
-    private final CafeRepository cafeRepository;
+    private final CafeService cafeService;
 
-    public CafeController(CafeRepository cafeRepository) {
-        this.cafeRepository = cafeRepository;
+    @Autowired
+    public CafeController(CafeService cafeService) {
+        this.cafeService = cafeService;
     }
 
     @GetMapping("/addCafe")
@@ -25,32 +27,32 @@ public class CafeController {
 
     @PostMapping("/addCafe")
     public String addCafe(Cafe cafe) {
-        cafeRepository.save(cafe);
+        cafeService.saveCafe(cafe);
         return "redirect:/cafes";
     }
 
     @GetMapping("/editCafe/{id}")
     public String editCafe(@PathVariable String id, Model model) {
-        model.addAttribute("cafe", cafeRepository.findById(id).get());
+        model.addAttribute("cafe", cafeService.findCafeById(id));
         return "cafe";
     }
 
     @GetMapping("/cafe/{id}")
     public String getCafe(@PathVariable String id, Model model) {
-        model.addAttribute("getCafe", cafeRepository.findById(id));
+        model.addAttribute("getCafe", cafeService.findCafeById(id));
         return "cafes";
     }
 
     @GetMapping("/cafes")
     public String getCafes(Model model) {
-        model.addAttribute("getCafes", cafeRepository.findAll());
+        model.addAttribute("getCafes", cafeService.getAllCafe());
         return "cafes";
     }
 
     @GetMapping("/deleteCafe/{id}")
     public String deleteCafe(@PathVariable String id, Model model) {
-        cafeRepository.deleteById(id);
-        model.addAttribute("cafes", cafeRepository.findAll());
+        cafeService.deleteCafeById(id);
+        model.addAttribute("cafes", cafeService.getAllCafe());
         return "redirect:/cafes";
     }
 
