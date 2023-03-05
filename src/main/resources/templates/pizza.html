@@ -20,8 +20,14 @@
         <input type="text" class="form-control" id="inputSize" th:field="*{size}">
     </div>
     <div class="mb-3">
-        <label for="inputPrice" class="form-label">Pizza price</label>
-        <input type="text" class="form-control" id="inputPrice" th:field="*{price}">
+        <select class="form-select" aria-label="Default select example">
+            <label for="inputPrice" class="form-label">Pizza price</label>
+            <input type="text" class="form-control" id="inputPrice" th:field="*{price}">
+            <option selected>Size</option>
+            <option value="1">Small</option>
+            <option value="2">Medium</option>
+            <option value="3">Big</option>
+        </select>
     </div>
     <div class="mb-3">
         <label for="inputIngredients" class="form-label">Pizza ingredients</label>
