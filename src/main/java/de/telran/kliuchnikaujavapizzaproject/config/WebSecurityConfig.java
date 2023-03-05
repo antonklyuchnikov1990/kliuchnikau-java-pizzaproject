@@ -31,23 +31,25 @@ public class WebSecurityConfig {
         final String[] permits = {"/", "/cafes", "/registration",
                 "/image/**"};
         http
-                .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers(permits).permitAll()
-                        .requestMatchers(PathRequest.toStaticResources()
-                                .atCommonLocations()).permitAll()
-                        .anyRequest().authenticated()
-                )
-                .formLogin((form) -> form
-                        .loginPage("/login")
-                        .defaultSuccessUrl("/")
-                        .permitAll()
-                )
-                .logout()
-                .invalidateHttpSession(true)
-                .clearAuthentication(true)
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/login?logout")
-                .permitAll();
+                .authorizeHttpRequests()
+                    .requestMatchers(permits).permitAll()
+                    .requestMatchers(PathRequest.toStaticResources()
+                        .atCommonLocations()).permitAll()
+                .anyRequest().authenticated()
+                .and()
+                    .formLogin()
+                    .loginPage("/login")
+                    .defaultSuccessUrl("/")
+                    .permitAll()
+                .and()
+                .rememberMe()
+                .and()
+                    .logout()
+                    .invalidateHttpSession(true)
+                    .clearAuthentication(true)
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                    .logoutSuccessUrl("/login?logout")
+                    .permitAll();
         http.userDetailsService(userService);
 
         return http.build();

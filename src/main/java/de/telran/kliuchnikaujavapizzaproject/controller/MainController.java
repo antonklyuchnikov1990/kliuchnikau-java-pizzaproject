@@ -1,11 +1,11 @@
 package de.telran.kliuchnikaujavapizzaproject.controller;
 
-import de.telran.kliuchnikaujavapizzaproject.model.Role;
+import de.telran.kliuchnikaujavapizzaproject.model.GoogleResponse;
 import de.telran.kliuchnikaujavapizzaproject.model.User;
+import de.telran.kliuchnikaujavapizzaproject.service.CaptchaService;
 import de.telran.kliuchnikaujavapizzaproject.service.PizzaService;
 import de.telran.kliuchnikaujavapizzaproject.service.RoleService;
 import de.telran.kliuchnikaujavapizzaproject.service.UserService;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -14,11 +14,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -30,24 +25,25 @@ import org.springframework.web.bind.annotation.PostMapping;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.List;
 
 @Controller
 public class MainController {
 
     private final PizzaService pizzaService;
     private final UserService userService;
-
     private final RoleService roleService;
+
+    private final CaptchaService captchaService;
 
     @Value("${images.dir}")
     private String imagesDir;
 
     @Autowired
-    public MainController(PizzaService pizzaService, UserService userService, RoleService roleService) {
+    public MainController(PizzaService pizzaService, UserService userService, RoleService roleService, CaptchaService captchaService) {
         this.pizzaService = pizzaService;
         this.userService = userService;
         this.roleService = roleService;
+        this.captchaService = captchaService;
     }
 
     @GetMapping("/")
@@ -70,7 +66,7 @@ public class MainController {
     }
 
     @PostMapping("/registration")
-    public String addUser(@Valid User user, BindingResult bindingResult, HttpServletRequest request, HttpServletResponse response) {
+    public String addUser(@Valid User user, BindingResult bindingResult, HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
             return "registration";
         }
@@ -81,6 +77,12 @@ public class MainController {
         }
         userService.saveUser(user);
         userService.authenticateUser(user);
+        String response = request.getParameter("g-recaptcha-response");
+        String ip = request.getRemoteAddr();
+        GoogleResponse googleResponse = captchaService.processResponse(response, ip);
+        if (!googleResponse.isSuccess()) {
+            return "registration";
+        }
         return "redirect:/";
     }
 
