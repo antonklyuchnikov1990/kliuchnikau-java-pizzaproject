@@ -1,17 +1,19 @@
 package de.telran.kliuchnikaujavapizzaproject.config;
 
-import de.telran.kliuchnikaujavapizzaproject.service.UserService;
 import jakarta.annotation.Resource;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.context.DelegatingSecurityContextRepository;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+import org.springframework.security.web.context.RequestAttributeSecurityContextRepository;
+import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -19,7 +21,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class WebSecurityConfig {
 
     @Resource
-    private UserService userService;
+    private UserDetailsService userService;
 
     @Bean
     public static PasswordEncoder passwordEncoder() {
@@ -32,8 +34,8 @@ public class WebSecurityConfig {
                 "/image/**"};
         http
                 .authorizeHttpRequests()
-                    .requestMatchers(permits).permitAll()
-                    .requestMatchers(PathRequest.toStaticResources()
+                .requestMatchers(permits).permitAll()
+                .requestMatchers(PathRequest.toStaticResources()
                         .atCommonLocations()).permitAll()
                 .anyRequest().authenticated()
                 .and()
@@ -42,7 +44,7 @@ public class WebSecurityConfig {
                     .defaultSuccessUrl("/")
                     .permitAll()
                 .and()
-                .rememberMe()
+                    .rememberMe()
                 .and()
                     .logout()
                     .invalidateHttpSession(true)
@@ -51,7 +53,9 @@ public class WebSecurityConfig {
                     .logoutSuccessUrl("/login?logout")
                     .permitAll();
         http.userDetailsService(userService);
-
+        http.securityContext().securityContextRepository(new DelegatingSecurityContextRepository(
+                new RequestAttributeSecurityContextRepository(),
+                new HttpSessionSecurityContextRepository())).requireExplicitSave(true);
         return http.build();
     }
 

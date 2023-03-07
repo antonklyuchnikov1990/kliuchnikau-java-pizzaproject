@@ -66,7 +66,7 @@ public class MainController {
     }
 
     @PostMapping("/registration")
-    public String addUser(@Valid User user, BindingResult bindingResult, HttpServletRequest request) {
+    public String addUser(@Valid User user, BindingResult bindingResult, HttpServletRequest request, HttpServletResponse response) {
         if (bindingResult.hasErrors()) {
             return "registration";
         }
@@ -76,10 +76,10 @@ public class MainController {
             return "registration";
         }
         userService.saveUser(user);
-        userService.authenticateUser(user);
-        String response = request.getParameter("g-recaptcha-response");
+        userService.authenticateUser(user, request, response);
+        String responseCaptcha = request.getParameter("g-recaptcha-response");
         String ip = request.getRemoteAddr();
-        GoogleResponse googleResponse = captchaService.processResponse(response, ip);
+        GoogleResponse googleResponse = captchaService.processResponse(responseCaptcha, ip);
         if (!googleResponse.isSuccess()) {
             return "registration";
         }

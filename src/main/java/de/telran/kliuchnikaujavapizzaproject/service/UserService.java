@@ -4,34 +4,36 @@ import de.telran.kliuchnikaujavapizzaproject.model.Role;
 import de.telran.kliuchnikaujavapizzaproject.model.User;
 import de.telran.kliuchnikaujavapizzaproject.repository.RoleRepository;
 import de.telran.kliuchnikaujavapizzaproject.repository.UserRepository;
-import jakarta.servlet.ServletException;
+import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.context.SecurityContextHolderStrategy;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
+import org.springframework.security.web.context.DelegatingSecurityContextRepository;
 import org.springframework.stereotype.Service;
 
-import javax.management.remote.JMXAuthenticator;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class UserService implements UserDetailsService {
-    protected AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+
+    @Resource
+    private DelegatingSecurityContextRepository securityContextRepository;
 
     public UserService(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
@@ -70,10 +72,14 @@ public class UserService implements UserDetailsService {
         return authorities;
     }
 
-    public void authenticateUser(User user) {
-        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+    public void authenticateUser(User user, HttpServletRequest request, HttpServletResponse response) {
+        Authentication authentication = new UsernamePasswordAuthenticationToken(
                 user.getEmail(), user.getPassword(), getAuthorities(user.getRoles()));
-        SecurityContextHolder.getContext().setAuthentication(authToken);
+        SecurityContextHolderStrategy securityContextHolderStrategy = SecurityContextHolder
+                .getContextHolderStrategy();
+        SecurityContext context = securityContextHolderStrategy.createEmptyContext();
+        context.setAuthentication(authentication);
+        securityContextHolderStrategy.setContext(context);
+        securityContextRepository.saveContext(context, request, response);
     }
-
 }

@@ -2,6 +2,7 @@ package de.telran.kliuchnikaujavapizzaproject.service;
 
 import de.telran.kliuchnikaujavapizzaproject.config.CaptchaSettings;
 import de.telran.kliuchnikaujavapizzaproject.model.GoogleResponse;
+import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -11,7 +12,7 @@ import java.net.URI;
 @Service
 public class CaptchaService {
 
-    @Autowired
+    @Resource
     private CaptchaSettings captchaSettings;
 
     public GoogleResponse processResponse(String response, String ip) {
