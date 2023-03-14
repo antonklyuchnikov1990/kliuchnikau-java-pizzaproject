@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +26,7 @@ public class Order {
     private LocalDateTime date;
 
     @ManyToMany
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Pizza> pizzas = new ArrayList<>();
 
     @ManyToOne

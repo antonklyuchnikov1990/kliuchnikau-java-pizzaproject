@@ -13,6 +13,12 @@
 
 <body>
 
+<nav sec:authorize="hasRole('ROLE_ADMIN')" class="nav nav-pills nav-fill">
+    <a class="nav-link active" aria-current="page" th:href="@{/cafes}">Cafes</a>
+    <a class="nav-link" th:href="@{/pizzas}">Pizzas</a>
+    <a class="nav-link" th:href="@{/logout}">Log Out</a>
+</nav>
+
 <div>
 <button type="button" class="btn btn-warning" th:onclick="|location.href='@{registration}'|" style="margin-left:10px; margin-top: 10px">
     Registration
