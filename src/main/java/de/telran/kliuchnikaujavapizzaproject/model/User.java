@@ -1,6 +1,5 @@
 package de.telran.kliuchnikaujavapizzaproject.model;
 
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -13,10 +12,10 @@ import org.hibernate.annotations.OnDeleteAction;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Data
-@Table(name = "users")
 @NoArgsConstructor
+@Data
+@Entity
+@Table(name = "users")
 public class User {
 
     @Id
@@ -40,7 +39,8 @@ public class User {
     @Transient
     private String confirmPassword;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Role> roles = new ArrayList<>();
+
 }

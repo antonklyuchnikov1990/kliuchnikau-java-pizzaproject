@@ -3,8 +3,9 @@ package de.telran.kliuchnikaujavapizzaproject.controller;
 import de.telran.kliuchnikaujavapizzaproject.model.Pizza;
 import de.telran.kliuchnikaujavapizzaproject.repository.PizzaRepository;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -31,11 +32,13 @@ public class PizzaRestController {
     }
 
     @RequestMapping(value = "/pizza", method = {RequestMethod.PUT, RequestMethod.POST})
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> createPizza(@RequestBody Pizza pizza) {
         return new ResponseEntity<>(pizzaRepository.save(pizza), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/pizza/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deletePizza(@PathVariable String id) {
         if (!pizzaRepository.existsById(id)) {
            return ResponseEntity.notFound().build();

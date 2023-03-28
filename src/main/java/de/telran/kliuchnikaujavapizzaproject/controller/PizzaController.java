@@ -1,9 +1,10 @@
 package de.telran.kliuchnikaujavapizzaproject.controller;
 
 import de.telran.kliuchnikaujavapizzaproject.model.Pizza;
-import de.telran.kliuchnikaujavapizzaproject.repository.CafeRepository;
 import de.telran.kliuchnikaujavapizzaproject.service.CafeService;
 import de.telran.kliuchnikaujavapizzaproject.service.PizzaService;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,12 +29,14 @@ public class PizzaController {
 
 
     @PostMapping("/addPizza")
+    @PreAuthorize("hasRole('ADMIN')")
     public String addPizza(Pizza pizza, @RequestParam("image") MultipartFile file) {
         pizzaService.saveNewPizza(pizza, file);
         return "redirect:/pizzas";
     }
 
     @GetMapping("/addPizza")
+    @PreAuthorize("hasRole('ADMIN')")
     public String addPizza(Model model) {
         model.addAttribute("pizza", new Pizza());
         model.addAttribute("cafes", cafeService.getAllCafe());
@@ -41,6 +44,7 @@ public class PizzaController {
     }
 
     @GetMapping("/editPizza/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String editPizza(@PathVariable String id, Model model) {
         model.addAttribute("pizza", pizzaService.findPizzaById(id));
         model.addAttribute("cafes", cafeService.getAllCafe());
@@ -60,6 +64,7 @@ public class PizzaController {
     }
 
     @GetMapping("/deletePizza/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String deletePizza(@PathVariable String id, Model model) {
         pizzaService.deletePizzaById(id);
         model.addAttribute("pizzas", pizzaService.getAllPizzas());

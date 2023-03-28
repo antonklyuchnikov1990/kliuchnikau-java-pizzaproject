@@ -14,6 +14,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -41,8 +42,8 @@ public class PizzaService {
         pizzaRepository.save(pizza);
     }
 
-    public Pizza findPizzaById(String id) {
-        return pizzaRepository.findById(id).get();
+    public Optional<Pizza> findPizzaById(String id) {
+        return pizzaRepository.findById(id);
     }
 
     public List<Pizza> getAllPizzas() {

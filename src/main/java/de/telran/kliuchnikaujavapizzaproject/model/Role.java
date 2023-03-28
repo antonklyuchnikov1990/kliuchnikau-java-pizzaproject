@@ -10,9 +10,9 @@ import org.hibernate.annotations.OnDeleteAction;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Data
 @NoArgsConstructor
+@Data
+@Entity
 @Table(name = "roles")
 public class Role {
 
@@ -24,11 +24,12 @@ public class Role {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @ManyToMany(mappedBy = "roles")
+    @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<User> users = new ArrayList<>();
 
     public Role(String name) {
         this.name = name;
     }
+
 }

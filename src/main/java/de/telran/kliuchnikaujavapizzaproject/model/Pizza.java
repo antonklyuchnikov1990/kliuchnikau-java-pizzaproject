@@ -7,8 +7,6 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import java.util.List;
-
 @Data
 @NoArgsConstructor
 @Entity
@@ -29,10 +27,8 @@ public class Pizza {
 
     private String picture;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Cafe cafe;
-
-
 
 }

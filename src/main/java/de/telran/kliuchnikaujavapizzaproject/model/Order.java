@@ -1,8 +1,7 @@
 package de.telran.kliuchnikaujavapizzaproject.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -11,10 +10,12 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@NoArgsConstructor
+@ToString
+@Getter
+@Setter
 @Entity
 @Table(name = "orders")
-@Data
-@NoArgsConstructor
 public class Order {
 
     @Id
@@ -25,7 +26,7 @@ public class Order {
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime date;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Pizza> pizzas = new ArrayList<>();
 

@@ -4,6 +4,8 @@ import de.telran.kliuchnikaujavapizzaproject.model.Cafe;
 import de.telran.kliuchnikaujavapizzaproject.repository.CafeRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -30,11 +32,13 @@ public class CafeRestController {
     }
 
     @RequestMapping(value = "/cafe", method = {RequestMethod.POST, RequestMethod.PUT})
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> updateCafe(@RequestBody Cafe cafe) {
         return new ResponseEntity<>(cafeRepository.save(cafe), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/cafe/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteCafe(@PathVariable String id) {
         if (!cafeRepository.existsById(id)) {
             return ResponseEntity.notFound().build();

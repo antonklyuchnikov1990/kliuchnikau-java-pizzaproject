@@ -8,8 +8,5 @@ import java.util.List;
 
 @Repository
 public interface CafeRepository extends CrudRepository<Cafe, String> {
-
-//    List<Cafe> findAllByAddress();
-
-
+        Cafe findCafeByName(String name);
 }

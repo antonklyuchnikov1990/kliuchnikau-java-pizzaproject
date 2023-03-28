@@ -1,3 +1,5 @@
+SET FOREIGN_KEY_CHECKS = 0;
+
 insert into cafe (id, name, address) values ('20ebdfe3-191e-4f46-951a-b34b55611a4a', 'Tempo_Berlin', 'Berlin');
 insert into cafe (id, name, address) values ('a010e9d0-f4fe-40c7-871d-72f4979a85ca', 'Tempo_Milan', 'Milan');
 insert into cafe (id, name, address) values ('90e4801a-8d77-4b59-9189-787d329667ba', 'Tempo_Paris', 'Paris');

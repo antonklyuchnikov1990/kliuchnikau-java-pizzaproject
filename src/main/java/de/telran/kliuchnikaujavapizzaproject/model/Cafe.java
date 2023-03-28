@@ -1,9 +1,6 @@
 package de.telran.kliuchnikaujavapizzaproject.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
@@ -27,8 +24,8 @@ public class Cafe {
 
     private String address;
 
-    @OneToMany(mappedBy = "cafe")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private List<Order> orders = new ArrayList<>();
+//    @OneToMany(mappedBy = "cafe", fetch = FetchType.LAZY)
+//    @OnDelete(action = OnDeleteAction.CASCADE)
+//    private List<Order> orders = new ArrayList<>();
 
 }
