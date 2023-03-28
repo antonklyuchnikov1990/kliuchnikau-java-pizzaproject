@@ -34,7 +34,6 @@
 
         <div id="validationServer03Feedback" class="invalid-feedback"
              th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
-
         </div>
 
             <label for="confirmPassword" class="sr-only">Confirm Password</label>
@@ -46,9 +45,7 @@
         <span id="captchaError" class="alert alert-danger col-sm-4"
               style="display:none"></span>
 
-
         <button type="submit" class="btn btn-primary" id="login">Submit</button>
-
 
     </form>
 

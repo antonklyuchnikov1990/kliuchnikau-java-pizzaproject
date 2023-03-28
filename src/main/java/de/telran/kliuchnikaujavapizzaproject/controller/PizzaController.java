@@ -3,7 +3,6 @@ package de.telran.kliuchnikaujavapizzaproject.controller;
 import de.telran.kliuchnikaujavapizzaproject.model.Pizza;
 import de.telran.kliuchnikaujavapizzaproject.service.CafeService;
 import de.telran.kliuchnikaujavapizzaproject.service.PizzaService;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

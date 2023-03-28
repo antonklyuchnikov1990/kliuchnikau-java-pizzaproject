@@ -37,11 +37,11 @@
         <label for="image" class="form-label">Image</label>
         <input class="form-control" type="file" id="image" name="image">
     </div>
-<!--    <div class="mb-3">-->
-<!--        <label for="dataBaseImage" class="form-label">Current image</label>-->
-<!--        <a id="dataBaseImage" th:href="@{'/image/' + ${pizza.picture}}"-->
-<!--               th:text="${pizza.picture}" target="_blank"/>-->
-<!--    </div>-->
+    <div class="mb-3">
+        <label for="dataBaseImage" class="form-label">Current image</label>
+        <a id="dataBaseImage" th:href="@{'/image/' + ${pizza.picture}}"
+               th:text="${pizza.picture}" target="_blank"/>
+    </div>
     <div class="mb-3">
         <label for="selectCafe" class="form-label">Select Cafe</label>
         <select class="form-select" id="selectCafe" th:field="*{cafe}">

@@ -4,7 +4,6 @@ import de.telran.kliuchnikaujavapizzaproject.model.Pizza;
 import de.telran.kliuchnikaujavapizzaproject.repository.PizzaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,7 +40,7 @@ public class PizzaRestController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deletePizza(@PathVariable String id) {
         if (!pizzaRepository.existsById(id)) {
-           return ResponseEntity.notFound().build();
+            return ResponseEntity.notFound().build();
         }
         pizzaRepository.deleteById(id);
         return new ResponseEntity<>(HttpStatus.OK);
