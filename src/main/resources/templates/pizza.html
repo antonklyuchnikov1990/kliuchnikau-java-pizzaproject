@@ -16,13 +16,11 @@
         <input type="text" class="form-control" id="inputName" th:field="*{name}">
     </div>
     <div class="mb-3">
-        <label for="inputSize" class="form-label">Pizza size</label>
-        <select class="form-select" aria-label="Default select example">
-        <input type="text" class="form-control" id="inputSize" th:field="*{size}">
-            <option selected>Size</option>
-            <option value="1">Small</option>
-            <option value="2">Medium</option>
-            <option value="3">Big</option>
+        <label for="select" class="form-label">Pizza size</label>
+        <select class="form-select" id="select" th:field="*{size}">
+            <option value="small">Small</option>
+            <option value="medium">Medium</option>
+            <option value="big">Big</option>
         </select>
     </div>
     <div class="mb-3">
@@ -37,11 +35,11 @@
         <label for="image" class="form-label">Image</label>
         <input class="form-control" type="file" id="image" name="image">
     </div>
-    <div class="mb-3">
-        <label for="dataBaseImage" class="form-label">Current image</label>
-        <a id="dataBaseImage" th:href="@{'/image/' + ${pizza.picture}}"
-               th:text="${pizza.picture}" target="_blank"/>
-    </div>
+<!--    <div class="mb-3">-->
+<!--        <label for="dataBaseImage" class="form-label">Current image</label>-->
+<!--        <a id="dataBaseImage" th:href="@{'/image/' + ${pizza.picture}}"-->
+<!--               th:text="${pizza.picture}" target="_blank"/>-->
+<!--    </div>-->
     <div class="mb-3">
         <label for="selectCafe" class="form-label">Select Cafe</label>
         <select class="form-select" id="selectCafe" th:field="*{cafe}">
